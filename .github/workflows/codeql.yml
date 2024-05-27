@@ -42,9 +42,7 @@ jobs:
           category: "/language:${{ matrix.language }}"
 
       - name: Step 3 - Use the Upload Artifact GitHub Action
-        uses: actions/upload-artifact@v2
-        with: 
-          name: assets-for-download
+        uses: actions/upload-artifact@v4
+        with:
+          name: assets-for-smartmontools-${{ matrix.runs-on }}
           path: .
-          name: smartmontools
-          path: ./
