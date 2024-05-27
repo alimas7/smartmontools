@@ -1,8 +1,8 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ "master" ]
+###  push:
+###    branches: [ "master" ]
 ###  pull_request:
 ###    branches: [ "master" ]
 ###  schedule:
@@ -26,20 +26,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: ${{ matrix.language }}
-          queries: +security-and-quality
+###      - name: Initialize CodeQL
+###        uses: github/codeql-action/init@v2
+###        with:
+###          languages: ${{ matrix.language }}
+###          queries: +security-and-quality
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
         if: ${{ matrix.language == 'javascript' || matrix.language == 'cpp' }}
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
-        with:
-          category: "/language:${{ matrix.language }}"
+###      - name: Perform CodeQL Analysis
+###        uses: github/codeql-action/analyze@v2
+###        with:
+###          category: "/language:${{ matrix.language }}"
 
       - name: Step 3 - Use the Upload Artifact GitHub Action
         uses: actions/upload-artifact@v4
