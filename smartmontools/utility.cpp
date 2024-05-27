@@ -360,7 +360,7 @@ void dateandtimezoneepoch(char (& buffer)[DATEANDEPOCHLEN], time_t tval)
   char datebuffer[32];
   STATIC_ASSERT(sizeof(datebuffer) >= 26); // assumed by asctime_r()
 #ifndef _WIN32
- if (!strftime(s,sizeof(s),"%F %H:%M:%S", tmval))
+ if (!strftime(datebuffer,sizeof(s),"%F %H:%M:%S", tmval))
     throw std::runtime_error("strftime() failed");
 #else
   // MSVCRT, C11 (missing in POSIX)
