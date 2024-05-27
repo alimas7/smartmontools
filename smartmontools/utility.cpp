@@ -367,7 +367,8 @@ void dateandtimezoneepoch(char (& buffer)[DATEANDEPOCHLEN], time_t tval)
   if (asctime_s(datebuffer, sizeof(datebuffer), tmval))
     throw std::runtime_error("asctime_s() failed");
 #endif
-  
+
+/*
   // Remove newline
   int lenm1 = strlen(datebuffer) - 1;
   datebuffer[lenm1>=0?lenm1:0]='\0';
@@ -396,7 +397,7 @@ void dateandtimezoneepoch(char (& buffer)[DATEANDEPOCHLEN], time_t tval)
   if (!getenv("TZ"))
     timezonename=fixtzname(tzfixbuf, sizeof(tzfixbuf), timezonename);
 #endif
-  
+*/
   // Finally put the information into the buffer as needed.
   snprintf(buffer, DATEANDEPOCHLEN, "%s %s", datebuffer, timezonename);
   
