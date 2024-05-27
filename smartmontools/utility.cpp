@@ -372,7 +372,7 @@ void dateandtimezoneepoch(char (& buffer)[DATEANDEPOCHLEN], time_t tval)
   // Remove newline
   int lenm1 = strlen(datebuffer) - 1;
   datebuffer[lenm1>=0?lenm1:0]='\0';
-
+*/
 #if defined(_WIN32) && defined(_MSC_VER)
   // tzname is missing in MSVC14
   #define tzname _tzname
@@ -397,7 +397,7 @@ void dateandtimezoneepoch(char (& buffer)[DATEANDEPOCHLEN], time_t tval)
   if (!getenv("TZ"))
     timezonename=fixtzname(tzfixbuf, sizeof(tzfixbuf), timezonename);
 #endif
-*/
+
   // Finally put the information into the buffer as needed.
   snprintf(buffer, DATEANDEPOCHLEN, "%s %s", datebuffer, timezonename);
   
