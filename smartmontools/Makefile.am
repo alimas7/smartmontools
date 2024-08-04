@@ -18,7 +18,7 @@ endif
 
 AM_LDFLAGS = -g
 
-AM_CPPFLAGS = -g -finstrument-functions \
+AM_CPPFLAGS = -g \
         $(def_source_date_epoch) \
         -DBUILD_INFO='$(BUILD_INFO)' \
         -DSMARTMONTOOLS_SYSCONFDIR='"$(sysconfdir)"' \
