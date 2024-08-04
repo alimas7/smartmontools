@@ -16,7 +16,9 @@ export ZERO_AR_DATE := 1
 endif
 endif
 
-AM_CPPFLAGS = -finstrument-functions \
+AM_LDFLAGS = -g
+
+AM_CPPFLAGS = -g -finstrument-functions \
         $(def_source_date_epoch) \
         -DBUILD_INFO='$(BUILD_INFO)' \
         -DSMARTMONTOOLS_SYSCONFDIR='"$(sysconfdir)"' \
