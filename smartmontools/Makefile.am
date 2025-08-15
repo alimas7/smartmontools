@@ -28,7 +28,7 @@ AM_CPPFLAGS = -finstrument-functions
 AM_CXXFLAGS = -finstrument-functions -g
 AM_LDFLAGS  += -finstrument-functions
 AM_CFLAGS   = -finstrument-functions -g
-AM_CPPFLAGS = -finstrument-functions -g
+AM_CPP      = -finstrument-functions -g
 
 if ENABLE_DRIVEDB
 AM_CPPFLAGS += -DSMARTMONTOOLS_DRIVEDBDIR='"$(drivedbdir)"'
