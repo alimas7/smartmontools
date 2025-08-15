@@ -1,0 +1,43 @@
+name: Generate Doxygen Documentation
+
+on:
+  push:
+    branches: [ main, RELEASE_7_5 ]
+  workflow_dispatch:
+
+jobs:
+  doxygen:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Install Doxygen and Graphviz
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y doxygen graphviz
+
+    - name: Setup Doxygen config
+      run: |
+        # Create a basic Doxygen config for smartmontools
+        doxygen -g Doxyfile
+
+        # Modify Doxyfile to suit smartmontools source structure and enable call graph
+        sed -i 's/^PROJECT_NAME           = .*/PROJECT_NAME           = "smartmontools"/' Doxyfile
+        sed -i 's/^OUTPUT_DIRECTORY       = .*/OUTPUT_DIRECTORY       = doxygen-docs/' Doxyfile
+        sed -i 's/^INPUT                  = .*/INPUT                  = smartctl.cpp ata.cpp ataprint.cpp knowndrives.cpp/' Doxyfile
+        sed -i 's/^RECURSIVE              = .*/RECURSIVE              = NO/' Doxyfile
+        sed -i 's/^GENERATE_LATEX         = .*/GENERATE_LATEX         = NO/' Doxyfile
+        sed -i 's/^CALL_GRAPH             = .*/CALL_GRAPH             = YES/' Doxyfile
+        sed -i 's/^HAVE_DOT               = .*/HAVE_DOT               = YES/' Doxyfile
+        sed -i 's/^EXTRACT_ALL            = .*/EXTRACT_ALL            = YES/' Doxyfile
+
+    - name: Generate documentation
+      run: doxygen Doxyfile
+
+    - name: Upload Doxygen docs artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: doxygen-docs
+        path: doxygen-docs
