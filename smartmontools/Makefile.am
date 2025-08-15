@@ -24,6 +24,10 @@ AM_CPPFLAGS = -g \
         -DSMARTMONTOOLS_SYSCONFDIR='"$(sysconfdir)"' \
         -DSMARTMONTOOLS_SMARTDSCRIPTDIR='"$(smartdscriptdir)"'
 
+AM_CXXFLAGS += -finstrument-functions -g
+AM_LDFLAGS  += -finstrument-functions -g
+AM_CFLAGS   += -finstrument-functions -g
+
 if ENABLE_DRIVEDB
 AM_CPPFLAGS += -DSMARTMONTOOLS_DRIVEDBDIR='"$(drivedbdir)"'
 endif
@@ -31,17 +35,17 @@ if ENABLE_SAVESTATES
 AM_CPPFLAGS += -DSMARTMONTOOLS_SAVESTATES='"$(savestates)"'
 endif
 if ENABLE_ATTRIBUTELOG
-AM_CPPFLAGS += -DSMARTMONTOOLS_ATTRIBUTELOG='"$(attributelog)"'
+AM_CPP += -DSMARTMONTOOLS_ATTRIBUTELOG='"$(attributelog)"'
 endif
 
 if OS_WIN32_MINGW
-AM_CPPFLAGS += -I$(srcdir)/os_win32
+AM_CPP += -I$(srcdir)/os_win32
 endif
 if NEED_GETOPT_LONG
-AM_CPPFLAGS += -I$(srcdir)/getopt -D_GETOPT_STANDALONE
+AM_CPP += -I$(srcdir)/getopt -D_GETOPT_STANDALONE
 endif
 if NEED_REGEX
-AM_CPPFLAGS += -I$(srcdir)/regex -D_REGEX_STANDALONE
+AM_CPP += -I$(srcdir)/regex -D_REGEX_STANDALONE
 endif
 
 # Suppress 'echo' if './configure --enable-silent-rules' or 'make V=0' is used.
@@ -793,10 +797,10 @@ check:
 # Create cppcheck report
 cppcheck: cppcheck.txt
 
-CPPCHECKFLAGS=
+CPPCHECK=
 cppcheck.txt: $(smartctl_SOURCES) $(EXTRA_smartctl_SOURCES) \
               $(smartd_SOURCES) $(EXTRA_smartd_SOURCES)
-	$(srcdir)/cppcheck.sh $(CPPCHECKFLAGS) > $@
+	$(srcdir)/cppcheck.sh $(CPPCHECK) > $@
 
 # Create shellcheck report
 shellcheck: shellcheck.txt
@@ -805,7 +809,7 @@ SHELLCHECK=shellcheck
 
 # Exclude "SC3043 (warning): In POSIX sh, 'local' is undefined."
 # Virtually all relevant /bin/sh shells support 'local'
-SHELLCHECKFLAGS=-S warning -e SC3043
+SHELLCHECK=-S warning -e SC3043
 
 SHELLSCRIPTS= \
     $(srcdir)/autogen.sh \
@@ -817,7 +821,7 @@ SHELLSCRIPTS= \
     update-smart-drivedb
 
 shellcheck.txt: $(SHELLSCRIPTS)
-	$(ECHO_V_GEN) '  $(SHELLCHECK) $(SHELLCHECKFLAGS) $(SHELLSCRIPTS) > $@'
+	$(ECHO_V_GEN) '  $(SHELLCHECK) $(SHELLCHECK) $(SHELLSCRIPTS) > $@'
 	@$(SHELLCHECK) $(SHELLCHECKFLAGS) $(SHELLSCRIPTS) > $@ || \
 	if [ $$? = 1 ]; then echo "$@: issues found"; else rm -f $@; exit 1; fi
 
