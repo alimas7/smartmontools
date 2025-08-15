@@ -21,7 +21,7 @@ jobs:
         cflow --omit-arguments --main=main smartctl.cpp ata.cpp ataprint.cpp knowndrives.cpp > smartctl-callgraph.txt
 
     - name: Upload call graph artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: smartctl-cflow-callgraph
         path: smartctl-callgraph.txt
