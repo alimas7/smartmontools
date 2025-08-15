@@ -1,0 +1,27 @@
+name: Generate cflow Call Graph
+
+on:
+  push:
+    branches: [ main, RELEASE_7_5 ]
+  workflow_dispatch:
+
+jobs:
+  cflow:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Install cflow
+      run: sudo apt-get update && sudo apt-get install -y cflow
+
+    - name: Generate call graph for smartctl
+      run: |
+        cflow --omit-arguments --main=main smartctl.cpp ata.cpp ataprint.cpp knowndrives.cpp > smartctl-callgraph.txt
+
+    - name: Upload call graph artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: smartctl-cflow-callgraph
+        path: smartctl-callgraph.txt
