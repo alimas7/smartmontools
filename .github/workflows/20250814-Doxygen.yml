@@ -34,10 +34,10 @@ jobs:
         sed -i 's/^EXTRACT_ALL            = .*/EXTRACT_ALL            = YES/' Doxyfile
 
     - name: Generate documentation
-      run: doxygen Doxyfile
+      run: pwd && doxygen Doxyfile
 
     - name: Upload Doxygen docs artifact
       uses: actions/upload-artifact@v4
       with:
         name: doxygen-docs
-        path: doxygen-docs/html
+        path: doc
