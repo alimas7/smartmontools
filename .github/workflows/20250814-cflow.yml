@@ -25,4 +25,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: smartctl-cflow-callgraph
-        path: smartctl-callgraph.txt
+        path: smartmontools/smartctl-callgraph.txt
