@@ -18,8 +18,8 @@ jobs:
 
     - name: Generate call graph for smartctl
       run: |
-        (pwd && find . -type f) > smartctl-callgraph.txt
-        # cflow --omit-arguments --main=main smartctl.cpp ata.cpp ataprint.cpp knowndrives.cpp > smartctl-callgraph.txt
+        # (pwd && find . -type f) > smartctl-callgraph.txt
+        cd smartmontools && cflow --omit-arguments --main=main smartctl.cpp ata.cpp ataprint.cpp knowndrives.cpp > smartctl-callgraph.txt
 
     - name: Upload call graph artifact
       uses: actions/upload-artifact@v4
