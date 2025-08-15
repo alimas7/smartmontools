@@ -24,9 +24,11 @@ AM_CPPFLAGS = -g \
         -DSMARTMONTOOLS_SYSCONFDIR='"$(sysconfdir)"' \
         -DSMARTMONTOOLS_SMARTDSCRIPTDIR='"$(smartdscriptdir)"'
 
-AM_CXXFLAGS += -finstrument-functions -g
-AM_LDFLAGS  += -finstrument-functions -g
-AM_CFLAGS   += -finstrument-functions -g
+AM_CPPFLAGS = -finstrument-functions
+AM_CXXFLAGS = -finstrument-functions -g
+AM_LDFLAGS  += -finstrument-functions
+AM_CFLAGS   = -finstrument-functions -g
+AM_CPPFLAGS = -finstrument-functions -g
 
 if ENABLE_DRIVEDB
 AM_CPPFLAGS += -DSMARTMONTOOLS_DRIVEDBDIR='"$(drivedbdir)"'
